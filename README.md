@@ -1,51 +1,25 @@
-# CakePHP Application Skeleton
+## How to set up the project
 
-[![Build Status](https://img.shields.io/travis/cakephp/app/master.svg?style=flat-square)](https://travis-ci.org/cakephp/app)
-[![Total Downloads](https://img.shields.io/packagist/dt/cakephp/app.svg?style=flat-square)](https://packagist.org/packages/cakephp/app)
+After cloning this project, you need to create a database, a user, the privileges, and so on : this is outside the scope of this documentation.
 
-A skeleton for creating applications with [CakePHP](https://cakephp.org) 3.x.
+Composer (https://getcomposer.org) is needed.
 
-The framework source code can be found here: [cakephp/cakephp](https://github.com/cakephp/cakephp).
-
-## Installation
-
-1. Download [Composer](https://getcomposer.org/doc/00-intro.md) or update `composer self-update`.
-2. Run `php composer.phar create-project --prefer-dist cakephp/app [app_name]`.
-
-If Composer is installed globally, run
+# Install dependencies with composer
 
 ```bash
-composer create-project --prefer-dist cakephp/app
+composer install
 ```
 
-In case you want to use a custom app dir name (e.g. `/myapp/`):
+# Configure the application to connect the database
+
+Modify the file `app.php` in the config directory.
+
+# Migrate the base, and seed it
 
 ```bash
-composer create-project --prefer-dist cakephp/app myapp
+bin/cake migrations migrate
+bin/cake migrations seed --seed CustomersSeed
+bin/cake migrations seed --seed InvoicesSeed
 ```
 
-You can now either use your machine's webserver to view the default home page, or start
-up the built-in webserver with:
-
-```bash
-bin/cake server -p 8765
-```
-
-Then visit `http://localhost:8765` to see the welcome page.
-
-## Update
-
-Since this skeleton is a starting point for your application and various files
-would have been modified as per your needs, there isn't a way to provide
-automated upgrades, so you have to do any updates manually.
-
-## Configuration
-
-Read and edit `config/app.php` and setup the `'Datasources'` and any other
-configuration relevant for your application.
-
-## Layout
-
-The app skeleton uses a subset of [Foundation](http://foundation.zurb.com/) (v5) CSS
-framework by default. You can, however, replace it with any other library or
-custom styles.
+Now the project is ready; the default page displays the list of customers.
