@@ -23,6 +23,8 @@ class CustomersController extends AppController
         $this->DataTables->createConfig('Customers')
             ->column('Customers.id', ['label' => 'Id', 'visible' => false])
             ->column('Customers.name', ['label' => 'Name'])
+            ->column('Customers.invoices_count', ['label' => 'Invoices', 'database' => false])
+            ->column('Customers.invoices_sum', ['label' => 'Total', 'database' => false])
             ->column('actions', ['label' => 'Actions', 'database' => false]);
     }
 
