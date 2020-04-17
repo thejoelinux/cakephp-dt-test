@@ -21,14 +21,18 @@ class InvoicesController extends AppController
         parent::initialize();
         $this->loadComponent('DataTables.DataTables');
         $this->DataTables->createConfig('Invoices')
+            ->options(["dom" => "<'row'<'col-sm-5'<'#filter_comp'>><'col-sm-2'><'col-sm-5'f>><'row'".
+                        "<'col-sm-12'tr>><'row'<'col-sm-5'i><'col-sm-7'p>>"])
             ->queryOptions(['contain' => [
-                'Customers' => ['fields' => ['Customers__id' => 'Customers.id',
-                    'Customers__name' => 'Customers.name']]
+                    'Customers' => ['fields' => ['Customers__id' => 'Customers.id',
+                        'Customers__name' => 'Customers.name']],
+                    'InvoiceStatuses' => ['fields' => ['InvoiceStatuses__id' => 'InvoiceStatuses.id',
+                        'InvoiceStatuses__name' => 'InvoiceStatuses.name']],
                 ]])
             ->column('Invoices.id', ['label' => 'Id', 'visible' => false])
             ->column('Invoices.name', ['label' => 'Name'])
             ->column('Customers.name', ['label' => 'Customer'])
-            ->column('Invoices.status', ['label' => 'Status'])
+            ->column('InvoiceStatuses.name', ['label' => 'Status'])
             ->column('Invoices.amount', ['label' => 'Amount'])
             ->column('actions', ['label' => 'Actions', 'database' => false]);
     }

@@ -13,12 +13,14 @@ class AddStatusToInvoices extends AbstractMigration
     public function change()
     {
         $table = $this->table('invoices');
-        $table->addColumn('status', 'string', [
-            'default' => null,
-            'limit' => 255,
+        $table->addColumn('invoice_status_id', 'integer', [
+            'default' => 1,
+            'limit' => 11,
             'null' => false,
             'after' => 'amount'
         ]);
+        $table->addForeignKey('invoice_status_id', 'invoice_statuses', 'id', 
+                ['delete'=> 'RESTRICT', 'update'=> 'CASCADE']);
         $table->update();
     }
 }
