@@ -26,6 +26,7 @@
             echo $this->Form->control('name');
             echo $this->Form->control('customer_id', ['options' => $customers]);
             echo $this->Form->control('amount');
+            echo $this->Form->control('status');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

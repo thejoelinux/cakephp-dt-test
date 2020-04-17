@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use DataTables\Controller\DataTablesAjaxRequestTrait;
 
 /**
  * Invoices Controller
@@ -12,6 +13,26 @@ use App\Controller\AppController;
  */
 class InvoicesController extends AppController
 {
+
+    use DataTablesAjaxRequestTrait;
+
+    public function initialize()
+    {
+        parent::initialize();
+        $this->loadComponent('DataTables.DataTables');
+        $this->DataTables->createConfig('Invoices')
+            ->queryOptions(['contain' => [
+                'Customers' => ['fields' => ['Customers__id' => 'Customers.id',
+                    'Customers__name' => 'Customers.name']]
+                ]])
+            ->column('Invoices.id', ['label' => 'Id', 'visible' => false])
+            ->column('Invoices.name', ['label' => 'Name'])
+            ->column('Customers.name', ['label' => 'Customer'])
+            ->column('Invoices.status', ['label' => 'Status'])
+            ->column('Invoices.amount', ['label' => 'Amount'])
+            ->column('actions', ['label' => 'Actions', 'database' => false]);
+    }
+
     /**
      * Index method
      *
@@ -19,12 +40,15 @@ class InvoicesController extends AppController
      */
     public function index()
     {
+        /* before datatables
         $this->paginate = [
             'contain' => ['Customers']
         ];
         $invoices = $this->paginate($this->Invoices);
 
         $this->set(compact('invoices'));
+        */
+        $this->DataTables->setViewVars('Invoices');
     }
 
     /**

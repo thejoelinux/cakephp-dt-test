@@ -19,6 +19,7 @@ class InvoicesFixture extends TestFixture
         'name' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'latin1_swedish_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'customer_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'amount' => ['type' => 'float', 'length' => null, 'precision' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => ''],
+        'status' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'latin1_swedish_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'created' => ['type' => 'datetime', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
         'modified' => ['type' => 'datetime', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
         '_constraints' => [
@@ -43,8 +44,9 @@ class InvoicesFixture extends TestFixture
                 'name' => 'Lorem ipsum dolor sit amet',
                 'customer_id' => 1,
                 'amount' => 1,
-                'created' => '2019-10-31 08:08:36',
-                'modified' => '2019-10-31 08:08:36'
+                'status' => 'Lorem ipsum dolor sit amet',
+                'created' => '2020-04-17 06:57:13',
+                'modified' => '2020-04-17 06:57:13'
             ],
         ];
         parent::init();

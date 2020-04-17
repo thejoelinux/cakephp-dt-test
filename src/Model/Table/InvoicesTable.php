@@ -69,6 +69,12 @@ class InvoicesTable extends Table
             ->requirePresence('amount', 'create')
             ->notEmptyString('amount');
 
+        $validator
+            ->scalar('status')
+            ->maxLength('status', 255)
+            ->requirePresence('status', 'create')
+            ->notEmptyString('status');
+
         return $validator;
     }
 
