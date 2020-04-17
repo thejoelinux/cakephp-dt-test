@@ -20,7 +20,8 @@
             echo $this->Form->control('name');
             echo $this->Form->control('customer_id', ['options' => $customers]);
             echo $this->Form->control('amount');
-            echo $this->Form->control('status');
+            echo $this->Form->control('invoice_status_id', 
+                ['options' => $invoice_statuses]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

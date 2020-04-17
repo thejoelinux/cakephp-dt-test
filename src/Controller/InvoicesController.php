@@ -21,8 +21,6 @@ class InvoicesController extends AppController
         parent::initialize();
         $this->loadComponent('DataTables.DataTables');
         $this->DataTables->createConfig('Invoices')
-            ->options(["dom" => "<'row'<'col-sm-5'<'#filter_comp'>><'col-sm-2'><'col-sm-5'f>><'row'".
-                        "<'col-sm-12'tr>><'row'<'col-sm-5'i><'col-sm-7'p>>"])
             ->queryOptions(['contain' => [
                     'Customers' => ['fields' => ['Customers__id' => 'Customers.id',
                         'Customers__name' => 'Customers.name']],
@@ -32,6 +30,7 @@ class InvoicesController extends AppController
             ->column('Invoices.id', ['label' => 'Id', 'visible' => false])
             ->column('Invoices.name', ['label' => 'Name'])
             ->column('Customers.name', ['label' => 'Customer'])
+            ->column('InvoiceStatuses.Id', ['label' => 'StatusId', 'visible' => false])
             ->column('InvoiceStatuses.name', ['label' => 'Status'])
             ->column('Invoices.amount', ['label' => 'Amount'])
             ->column('actions', ['label' => 'Actions', 'database' => false]);
@@ -65,7 +64,7 @@ class InvoicesController extends AppController
     public function view($id = null)
     {
         $invoice = $this->Invoices->get($id, [
-            'contain' => ['Customers']
+            'contain' => ['Customers', 'InvoiceStatuses']
         ]);
 
         $this->set('invoice', $invoice);
@@ -89,7 +88,8 @@ class InvoicesController extends AppController
             $this->Flash->error(__('The invoice could not be saved. Please, try again.'));
         }
         $customers = $this->Invoices->Customers->find('list', ['limit' => 200]);
-        $this->set(compact('invoice', 'customers'));
+        $invoice_statuses = $this->Invoices->InvoiceStatuses->find('list');
+        $this->set(compact('invoice', 'customers', 'invoice_statuses'));
     }
 
     /**
@@ -113,8 +113,9 @@ class InvoicesController extends AppController
             }
             $this->Flash->error(__('The invoice could not be saved. Please, try again.'));
         }
+        $invoice_statuses = $this->Invoices->InvoiceStatuses->find('list');
         $customers = $this->Invoices->Customers->find('list', ['limit' => 200]);
-        $this->set(compact('invoice', 'customers'));
+        $this->set(compact('invoice', 'customers', 'invoice_statuses'));
     }
 
     /**

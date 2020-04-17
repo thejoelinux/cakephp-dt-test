@@ -16,13 +16,13 @@ class InvoiceStatusesSeed extends AbstractSeed
         $data = [
             [
                 'id' => '1',
-                'name' => 'Paid',
+                'name' => 'Unpaid',
                 'created' => '2020-04-17 08:11:42',
                 'modified' => '2020-04-17 08:11:42',
             ],
             [
                 'id' => '2',
-                'name' => 'Not paid',
+                'name' => 'Paid',
                 'created' => '2020-04-17 08:11:42',
                 'modified' => '2020-04-17 08:11:42',
             ],

@@ -27,16 +27,16 @@
             <td><?= $invoice->has('customer') ? $this->Html->link($invoice->customer->name, ['controller' => 'Customers', 'action' => 'view', $invoice->customer->id]) : '' ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Status') ?></th>
-            <td><?= h($invoice->status) ?></td>
-        </tr>
-        <tr>
             <th scope="row"><?= __('Id') ?></th>
             <td><?= $this->Number->format($invoice->id) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Amount') ?></th>
             <td><?= $this->Number->format($invoice->amount) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Invoice Status') ?></th>
+            <td><?= $invoice->invoice_status->name ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Created') ?></th>

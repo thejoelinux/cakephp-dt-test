@@ -10,7 +10,7 @@ use Cake\ORM\Entity;
  * @property string $name
  * @property int $customer_id
  * @property float $amount
- * @property string $status
+ * @property int $invoice_status_id
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  *
@@ -31,7 +31,7 @@ class Invoice extends Entity
         'name' => true,
         'customer_id' => true,
         'amount' => true,
-        'status' => true,
+        'invoice_status_id' => true,
         'created' => true,
         'modified' => true,
         'customer' => true

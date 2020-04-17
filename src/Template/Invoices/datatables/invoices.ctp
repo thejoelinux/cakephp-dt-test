@@ -8,7 +8,8 @@ foreach ($results as $result)
         $result->id,
         h($result->name),
         $result->customer->name,
-        $result->status,
+        $result->invoice_status->id,
+        $result->invoice_status->name,
         Number::currency($result->amount, 'USD'),
         $this->Html->link('Edit', ['action' => 'edit', $result->id])
     ]);

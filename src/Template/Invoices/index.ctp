@@ -13,6 +13,13 @@
     </ul>
 </nav>
 <div class="invoices index large-9 medium-8 columns content">
+    <div>
+        <select id="filter_comp">
+            <option value="0">All</option>
+            <option value="1">Unpaid</option>
+            <option value="2">Paid</option>
+        </select>
+    </div>
     <?= $this->DataTables->render('Invoices') ?>
 </div>
 
@@ -20,24 +27,16 @@
 $(document).ready(function() {
     $('#dtInvoices').dataTable().fnSettings().aoDrawCallback.push( {
         "fn": function () {
-            if($("#filter_comp").html() === "") {
-                $("#filter_comp").html('<select class="toggle_row_display custom-select pull-left">'
-                    + '"<option value="0">All</option>"'
-                    + '"<option value="Not paid">Not paid</option>"'
-                    + '"<option value="Paid">Paid</option></select>');
-
-                $(".toggle_row_display").on("change", function() {
-                    if($(".toggle_row_display").val() != 0) {
-                        $('#dtInvoices').DataTable().columns(3).search(
-                            $(".toggle_row_display").val(), false, true, false
-                        );
-                        console.log('hi there');
-                    } else {
-                        // re-init the thing (TODO)
-                    }
-                    $('#dtInvoices').DataTable().draw();
-                });
-            }
+            $("#filter_comp").on("change", function() {
+                if($("#filter_comp").val() != 0) {
+                    $('#dtInvoices').DataTable().columns(3).search(
+                        $("#filter_comp").val());
+                    console.log('hi there');
+                } else {
+                    // re-init the thing (TODO)
+                }
+                $('#dtInvoices').DataTable().draw();
+            });
         },
         "sName": "status_filter"
     });
