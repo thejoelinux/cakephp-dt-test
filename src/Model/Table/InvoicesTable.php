@@ -10,6 +10,7 @@ use Cake\Validation\Validator;
  * Invoices Model
  *
  * @property \App\Model\Table\CustomersTable&\Cake\ORM\Association\BelongsTo $Customers
+ * @property &\Cake\ORM\Association\BelongsTo $InvoiceStatuses
  *
  * @method \App\Model\Entity\Invoice get($primaryKey, $options = [])
  * @method \App\Model\Entity\Invoice newEntity($data = null, array $options = [])
@@ -42,6 +43,10 @@ class InvoicesTable extends Table
 
         $this->belongsTo('Customers', [
             'foreignKey' => 'customer_id',
+            'joinType' => 'INNER'
+        ]);
+        $this->belongsTo('InvoiceStatuses', [
+            'foreignKey' => 'invoice_status_id',
             'joinType' => 'INNER'
         ]);
     }
@@ -82,6 +87,7 @@ class InvoicesTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['customer_id'], 'Customers'));
+        $rules->add($rules->existsIn(['invoice_status_id'], 'InvoiceStatuses'));
 
         return $rules;
     }

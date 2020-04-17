@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use DataTables\Controller\DataTablesAjaxRequestTrait;
 
 /**
  * Invoices Controller
@@ -12,6 +13,29 @@ use App\Controller\AppController;
  */
 class InvoicesController extends AppController
 {
+
+    use DataTablesAjaxRequestTrait;
+
+    public function initialize()
+    {
+        parent::initialize();
+        $this->loadComponent('DataTables.DataTables');
+        $this->DataTables->createConfig('Invoices')
+            ->queryOptions(['contain' => [
+                    'Customers' => ['fields' => ['Customers__id' => 'Customers.id',
+                        'Customers__name' => 'Customers.name']],
+                    'InvoiceStatuses' => ['fields' => ['InvoiceStatuses__id' => 'InvoiceStatuses.id',
+                        'InvoiceStatuses__name' => 'InvoiceStatuses.name']],
+                ]])
+            ->column('Invoices.id', ['label' => 'Id', 'visible' => false])
+            ->column('Invoices.name', ['label' => 'Name'])
+            ->column('Customers.name', ['label' => 'Customer'])
+            ->column('InvoiceStatuses.Id', ['label' => 'StatusId', 'visible' => false])
+            ->column('InvoiceStatuses.name', ['label' => 'Status'])
+            ->column('Invoices.amount', ['label' => 'Amount'])
+            ->column('actions', ['label' => 'Actions', 'database' => false]);
+    }
+
     /**
      * Index method
      *
@@ -19,12 +43,15 @@ class InvoicesController extends AppController
      */
     public function index()
     {
+        /* before datatables
         $this->paginate = [
             'contain' => ['Customers']
         ];
         $invoices = $this->paginate($this->Invoices);
 
         $this->set(compact('invoices'));
+        */
+        $this->DataTables->setViewVars('Invoices');
     }
 
     /**
@@ -37,7 +64,7 @@ class InvoicesController extends AppController
     public function view($id = null)
     {
         $invoice = $this->Invoices->get($id, [
-            'contain' => ['Customers']
+            'contain' => ['Customers', 'InvoiceStatuses']
         ]);
 
         $this->set('invoice', $invoice);
@@ -61,7 +88,8 @@ class InvoicesController extends AppController
             $this->Flash->error(__('The invoice could not be saved. Please, try again.'));
         }
         $customers = $this->Invoices->Customers->find('list', ['limit' => 200]);
-        $this->set(compact('invoice', 'customers'));
+        $invoice_statuses = $this->Invoices->InvoiceStatuses->find('list');
+        $this->set(compact('invoice', 'customers', 'invoice_statuses'));
     }
 
     /**
@@ -85,8 +113,9 @@ class InvoicesController extends AppController
             }
             $this->Flash->error(__('The invoice could not be saved. Please, try again.'));
         }
+        $invoice_statuses = $this->Invoices->InvoiceStatuses->find('list');
         $customers = $this->Invoices->Customers->find('list', ['limit' => 200]);
-        $this->set(compact('invoice', 'customers'));
+        $this->set(compact('invoice', 'customers', 'invoice_statuses'));
     }
 
     /**

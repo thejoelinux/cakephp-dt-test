@@ -4,19 +4,16 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Invoice Entity
+ * InvoiceStatus Entity
  *
  * @property int $id
  * @property string $name
- * @property int $customer_id
- * @property float $amount
- * @property int $invoice_status_id
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  *
- * @property \App\Model\Entity\Customer $customer
+ * @property \App\Model\Entity\Invoice[] $invoices
  */
-class Invoice extends Entity
+class InvoiceStatus extends Entity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -29,11 +26,8 @@ class Invoice extends Entity
      */
     protected $_accessible = [
         'name' => true,
-        'customer_id' => true,
-        'amount' => true,
-        'invoice_status_id' => true,
         'created' => true,
         'modified' => true,
-        'customer' => true
+        'invoices' => true
     ];
 }

@@ -13,45 +13,32 @@
     </ul>
 </nav>
 <div class="invoices index large-9 medium-8 columns content">
-    <h3><?= __('Invoices') ?></h3>
-    <table cellpadding="0" cellspacing="0">
-        <thead>
-            <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('name') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('customer_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('amount') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('created') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($invoices as $invoice): ?>
-            <tr>
-                <td><?= $this->Number->format($invoice->id) ?></td>
-                <td><?= h($invoice->name) ?></td>
-                <td><?= $invoice->has('customer') ? $this->Html->link($invoice->customer->name, ['controller' => 'Customers', 'action' => 'view', $invoice->customer->id]) : '' ?></td>
-                <td><?= $this->Number->format($invoice->amount) ?></td>
-                <td><?= h($invoice->created) ?></td>
-                <td><?= h($invoice->modified) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $invoice->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $invoice->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $invoice->id], ['confirm' => __('Are you sure you want to delete # {0}?', $invoice->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
+    <div>
+        <select id="filter_comp">
+            <option value="0">All</option>
+            <option value="1">Unpaid</option>
+            <option value="2">Paid</option>
+        </select>
     </div>
+    <?= $this->DataTables->render('Invoices') ?>
 </div>
+
+<script>
+$(document).ready(function() {
+    $('#dtInvoices').dataTable().fnSettings().aoDrawCallback.push( {
+        "fn": function () {
+            $("#filter_comp").on("change", function() {
+                if($("#filter_comp").val() != 0) {
+                    $('#dtInvoices').DataTable().columns(3).search(
+                        $("#filter_comp").val());
+                    console.log('hi there');
+                } else {
+                    // re-init the thing (TODO)
+                }
+                $('#dtInvoices').DataTable().draw();
+            });
+        },
+        "sName": "status_filter"
+    });
+});
+</script>

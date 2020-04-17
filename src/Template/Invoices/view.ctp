@@ -35,6 +35,10 @@
             <td><?= $this->Number->format($invoice->amount) ?></td>
         </tr>
         <tr>
+            <th scope="row"><?= __('Invoice Status') ?></th>
+            <td><?= $invoice->invoice_status->name ?></td>
+        </tr>
+        <tr>
             <th scope="row"><?= __('Created') ?></th>
             <td><?= h($invoice->created) ?></td>
         </tr>
