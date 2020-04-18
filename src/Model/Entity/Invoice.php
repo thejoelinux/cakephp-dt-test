@@ -34,6 +34,7 @@ class Invoice extends Entity
         'invoice_status_id' => true,
         'created' => true,
         'modified' => true,
-        'customer' => true
+        'customer' => true,
+        'invoice_status' => true
     ];
 }

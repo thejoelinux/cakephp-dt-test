@@ -30,7 +30,7 @@ class InvoicesController extends AppController
             ->column('Invoices.id', ['label' => 'Id', 'visible' => false])
             ->column('Invoices.name', ['label' => 'Name'])
             ->column('Customers.name', ['label' => 'Customer'])
-            ->column('InvoiceStatuses.Id', ['label' => 'StatusId', 'visible' => false])
+            ->column('InvoiceStatuses.id', ['label' => 'StatusId', 'visible' => false])
             ->column('InvoiceStatuses.name', ['label' => 'Status'])
             ->column('Invoices.amount', ['label' => 'Amount'])
             ->column('actions', ['label' => 'Actions', 'database' => false]);
@@ -43,14 +43,6 @@ class InvoicesController extends AppController
      */
     public function index()
     {
-        /* before datatables
-        $this->paginate = [
-            'contain' => ['Customers']
-        ];
-        $invoices = $this->paginate($this->Invoices);
-
-        $this->set(compact('invoices'));
-        */
         $this->DataTables->setViewVars('Invoices');
     }
 
